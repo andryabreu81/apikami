@@ -15,7 +15,9 @@ export class UsersService {
 
   async getUsers(): Promise<UserEntity[]> {
     console.log('here service');
-    return await this.usersRepository.find();
+    return await this.usersRepository.find({
+      relations:['role']
+    });
   }
 
 }
