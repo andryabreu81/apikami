@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body , Put} from '@nestjs/common';
+import { Controller, Get, Post, Body , Put, Delete, Param} from '@nestjs/common';
 import { UsersService } from './users.service';
 
 @Controller()
@@ -95,6 +95,29 @@ export class UsersController {
       statusCode: 200,
       message: 'Usuario actualizado exitosamente',
       data: usuarioActualizado
+    };
+  }
+
+  // actualizar un usuario especifico
+  @Delete('/deleteuser/:id')
+  async deleteUser(@Param('id') id: string) {
+    // Los parámetros de la URL siempre llegan como string, lo convertimos a número
+    const userId = parseInt(id, 10);
+
+    const eliminado = await this.usersService.deleteUser(userId);
+
+    if (!eliminado) {
+      return {
+        statusCode: 404,
+        message: 'No se pudo eliminar. El usuario no existe.',
+        data: null
+      };
+    }
+
+    return {
+      statusCode: 200,
+      message: 'Usuario eliminado exitosamente',
+      data: { userId }
     };
   }
 }
