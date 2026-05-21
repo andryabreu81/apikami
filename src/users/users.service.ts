@@ -43,4 +43,17 @@ export class UsersService {
     return await this.usersRepository.save(newUser);
   }
 
+  // actualizar un usuario especifico
+  async updateUser(
+  userId: number,
+  updateData: { name?: string; lastname?: string; email?: string; role_id?: number; password?: string }
+): Promise<UserEntity | null> {
+  
+  // 1. Ejecutamos la actualización directamente en la BD
+  await this.usersRepository.update(userId, updateData);
+
+  // 2. Retornamos el usuario ya actualizado (reutilizando tu método findUser)
+  return this.findUser(userId);
+}
+
 }

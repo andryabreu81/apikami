@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body , Put} from '@nestjs/common';
 import { UsersService } from './users.service';
 
 @Controller()
@@ -64,5 +64,37 @@ export class UsersController {
     };
 
     return response;
+  }
+
+  // actualizar un usuario especifico
+  @Put('/updateuser')
+  async updateUser(
+    @Body() body: { 
+      userId: number; 
+      name?: string; 
+      lastname?: string; 
+      email?: string; 
+      role_id?: number; 
+      password?: string; 
+    }
+  ) {
+    // Extraemos el userId y agrupamos el resto de datos para la actualización
+    const { userId, ...dataToUpdate } = body;
+
+    const usuarioActualizado = await this.usersService.updateUser(userId, dataToUpdate);
+
+    if (!usuarioActualizado) {
+      return {
+        statusCode: 404,
+        message: 'No se pudo actualizar. Usuario no encontrado.',
+        data: null
+      };
+    }
+
+    return {
+      statusCode: 200,
+      message: 'Usuario actualizado exitosamente',
+      data: usuarioActualizado
+    };
   }
 }
