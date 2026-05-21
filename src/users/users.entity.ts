@@ -12,7 +12,7 @@ import { RoleEntity } from '../rols/rols.entity';
 @Entity({ name: 'tb_users', schema: 'public' })
 export class UserEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
-  id: string;
+  id: number;
 
   @Column({ type: 'varchar' })
   name: string;
@@ -23,15 +23,18 @@ export class UserEntity {
   @Column({ type: 'varchar', unique: true })
   email: string;
 
-  @Column({ type: 'varchar', nullable: true, select: false }) // 'select: false' por seguridad al consultar
+  @Column({ type: 'varchar', nullable: true, select: false }) 
   password?: string;
+
+  @Column({ name: 'rol_id', type: 'int' }) 
+  role_id: number;
 
   @Column({ type: 'int', default: 1, nullable: true })
   active: number;
 
   @ManyToOne(() => RoleEntity, (role) => role.users)
   @JoinColumn({ name: 'rol_id' }) // Debe coincidir con el nombre en tb_users
-  role: RoleEntity;
+  role: number;
 
   @CreateDateColumn({ name: 'create_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   create_at: Date;
