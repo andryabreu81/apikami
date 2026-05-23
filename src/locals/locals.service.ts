@@ -17,4 +17,17 @@ export class LocalsService {
       relations:['user','user.role']
     });
   }
+
+  // agregar un local
+    async addLocal(
+      localData: {
+        name: string, 
+        address: string, 
+        user_id: number
+      }): Promise<LocalEntity> {
+  
+      const newLocal = this.localsRepository.create(localData);
+  
+      return await this.localsRepository.save(newLocal);
+    }
 }

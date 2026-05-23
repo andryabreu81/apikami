@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body } from '@nestjs/common';
 import { LocalsService } from './locals.service';
 
 @Controller()
@@ -19,4 +19,23 @@ export class LocalsController {
   
       return response;
     }
+
+    // agregar un local
+      @Post('/addlocal')
+      async addLocal(@Body() localData: { 
+        name: string; 
+        address: string; 
+        user_id: number ;
+       }): Promise<any> {
+    
+        let addLocal = this.localsService.addLocal(localData);
+    
+        let response = {
+          statusCode: 200,
+          message: 'Local agregado exitosamente',
+          data: await addLocal
+        };
+    
+        return response;
+      }
 }

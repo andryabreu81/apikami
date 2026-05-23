@@ -25,7 +25,7 @@ export class LocalEntity {
 
   // Guardamos la columna física para escenarios donde solo quieras usar el ID directamente
   @Column({ type: 'bigint', nullable: true })
-  user_id: string;
+  user_id: number;
 
   @Column({ type: 'int', default: 1, nullable: true })
   active: number;
