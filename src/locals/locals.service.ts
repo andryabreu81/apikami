@@ -12,9 +12,9 @@ export class LocalsService {
     ) {}
 
   async getLocals(): Promise<LocalEntity[]> {
-      console.log('here service');
-      return await this.localsRepository.find({
-        relations:['user']
-      });
-    }
+    //console.log('here service');
+    return await this.localsRepository.find({
+      relations:['user','user.role']
+    });
+  }
 }
