@@ -5,10 +5,12 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { RolsModule } from './rols/rols.module';
+import { LocalsModule } from './locals/locals.module';
 
 // entities
 import { UserEntity } from './users/users.entity'
 import { RoleEntity } from './rols/rols.entity';
+import { LocalEntity } from './locals/locals.entity';
 
 @Module({
   imports: [UsersModule,TypeOrmModule.forRoot({
@@ -18,9 +20,9 @@ import { RoleEntity } from './rols/rols.entity';
       username: 'postgres',
       password: '20111981',
       database: 'db_apikami',
-      entities: [UserEntity, RoleEntity], // O [__dirname + '/**/*.entity{.ts,.js}']
+      entities: [UserEntity, RoleEntity, LocalEntity], // O [__dirname + '/**/*.entity{.ts,.js}']
       synchronize: false, // Mantenlo en false si la tabla ya existe
-    }), UsersModule, RolsModule],
+    }), UsersModule, RolsModule, LocalsModule],
   controllers: [AppController],
   providers: [AppService],
 })

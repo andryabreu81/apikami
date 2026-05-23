@@ -5,9 +5,12 @@ import {
   CreateDateColumn, 
   UpdateDateColumn,
   ManyToOne,
-  JoinColumn
+  JoinColumn,
+  OneToMany
 } from 'typeorm';
+
 import { RoleEntity } from '../rols/rols.entity';
+import { LocalEntity } from '../locals/locals.entity';
 
 @Entity({ name: 'tb_users', schema: 'public' })
 export class UserEntity {
@@ -35,6 +38,9 @@ export class UserEntity {
   @ManyToOne(() => RoleEntity, (role) => role.users)
   @JoinColumn({ name: 'rol_id' }) // Debe coincidir con el nombre en tb_users
   role: number;
+
+  @OneToMany(() => LocalEntity, (local) => local.user)
+  locals: LocalEntity[];
 
   @CreateDateColumn({ name: 'create_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   create_at: Date;

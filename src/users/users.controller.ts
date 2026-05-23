@@ -8,7 +8,7 @@ export class UsersController {
   //obtener lista de usuarios
   @Get('/getusers')
   async getUsers(): Promise<any> {
-    console.log('here controller');
+    //console.log('here controller');
     let userList = this.usersService.getUsers();
     
     let response = {
