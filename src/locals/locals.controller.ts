@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 import { LocalsService } from './locals.service';
 
 @Controller()
@@ -93,5 +93,28 @@ export class LocalsController {
       data: localActualizado
     };
   }
+
+  // eliminar un local especifico
+    @Delete('/deletelocal/:id')
+    async deleteLocal(@Param('id') id: string) {
+      // Los parámetros de la URL siempre llegan como string, lo convertimos a número
+      const localId = parseInt(id, 10);
+  
+      const eliminado = await this.localsService.deleteLocal(localId);
+  
+      if (!eliminado) {
+        return {
+          statusCode: 404,
+          message: 'No se pudo eliminar. El local no existe.',
+          data: null
+        };
+      }
+  
+      return {
+        statusCode: 200,
+        message: 'Local eliminado exitosamente',
+        data: { localId }
+      };
+    }
 
 }

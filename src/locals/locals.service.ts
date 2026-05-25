@@ -54,4 +54,18 @@ export class LocalsService {
     // 2. Retornamos el usuario ya actualizado (reutilizando tu método findUser)
     return this.findLocal(localId);
   }
+
+
+  // eliminar un local especifico
+  async deleteLocal(localId: number): Promise<boolean> {
+    if (!localId) {
+      throw new Error('El ID del local es requerido para eliminar.');
+    }
+
+    // Ejecuta el DELETE. Retorna un objeto con información sobre las filas afectadas
+    const result = await this.localsRepository.delete(localId);
+
+    // Si 'affected' es mayor a 0, significa que el local existía y fue borrado
+    return (result.affected ?? 0) > 0;
+  }
 }

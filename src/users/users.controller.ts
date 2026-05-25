@@ -98,7 +98,7 @@ export class UsersController {
     };
   }
 
-  // actualizar un usuario especifico
+  // eliminar un usuario especifico
   @Delete('/deleteuser/:id')
   async deleteUser(@Param('id') id: string) {
     // Los parámetros de la URL siempre llegan como string, lo convertimos a número
