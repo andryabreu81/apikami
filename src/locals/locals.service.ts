@@ -18,6 +18,17 @@ export class LocalsService {
     });
   }
 
+
+    // Obtener un local por su ID
+    async findLocal(localId: number): Promise<LocalEntity | null> {
+  
+      return await this.localsRepository.findOne({ 
+        where: { id: localId },
+        relations:['user','user.role'] 
+      });
+  
+    }
+
   // agregar un local
     async addLocal(
       localData: {

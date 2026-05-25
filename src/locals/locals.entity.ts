@@ -15,7 +15,7 @@ import { UserEntity } from '../users/users.entity'; // Ajusta la ruta de tu enti
 @Index('tb_locals_id_idx', ['id', 'user_id']) 
 export class LocalEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
-  id: string; // bigserial se maneja como string para evitar pérdida de precisión
+  id: number; // bigserial se maneja como string para evitar pérdida de precisión
 
   @Column({ type: 'varchar', nullable: true })
   name: string;

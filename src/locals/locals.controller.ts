@@ -20,6 +20,32 @@ export class LocalsController {
       return response;
     }
 
+    // buscar un local especifico
+  @Post('/findLocal')
+  async findLocal(@Body() localData: { localId: number }) {
+    
+    let local = await this.localsService.findLocal(localData.localId);
+
+    let response = {};
+
+    if (local?.id != null) {
+     
+        response = {
+          statusCode: 200,
+          message: 'Local obtenido exitosamente',
+          data: await local
+        };
+    }else{
+          response = {
+          statusCode: 404,
+          message: 'Local no encontrado',
+          data: null
+        };
+    }
+
+    return response;
+  }
+
     // agregar un local
       @Post('/addlocal')
       async addLocal(@Body() localData: { 
