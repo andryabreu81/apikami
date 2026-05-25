@@ -30,15 +30,28 @@ export class LocalsService {
     }
 
   // agregar un local
-    async addLocal(
-      localData: {
-        name: string, 
-        address: string, 
-        user_id: number
-      }): Promise<LocalEntity> {
-  
-      const newLocal = this.localsRepository.create(localData);
-  
-      return await this.localsRepository.save(newLocal);
-    }
+  async addLocal(
+    localData: {
+      name: string, 
+      address: string, 
+      user_id: number
+    }): Promise<LocalEntity> {
+
+    const newLocal = this.localsRepository.create(localData);
+
+    return await this.localsRepository.save(newLocal);
+  }
+
+  // actualizar un usuario especifico
+  async updateLocal(
+    localId: number,
+    updateData: { name?: string; address?: string;  user_id?: number; }
+  ): Promise<LocalEntity | null> {
+    
+    // 1. Ejecutamos la actualización directamente en la BD
+    await this.localsRepository.update(localId, updateData);
+
+    // 2. Retornamos el usuario ya actualizado (reutilizando tu método findUser)
+    return this.findLocal(localId);
+  }
 }

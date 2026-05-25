@@ -46,22 +46,52 @@ export class LocalsController {
     return response;
   }
 
-    // agregar un local
-      @Post('/addlocal')
-      async addLocal(@Body() localData: { 
-        name: string; 
-        address: string; 
-        user_id: number ;
-       }): Promise<any> {
-    
-        let addLocal = this.localsService.addLocal(localData);
-    
-        let response = {
-          statusCode: 200,
-          message: 'Local agregado exitosamente',
-          data: await addLocal
-        };
-    
-        return response;
-      }
+  // agregar un local
+  @Post('/addlocal')
+  async addLocal(@Body() localData: { 
+    name: string; 
+    address: string; 
+    user_id: number ;
+    }): Promise<any> {
+
+    let addLocal = this.localsService.addLocal(localData);
+
+    let response = {
+      statusCode: 200,
+      message: 'Local agregado exitosamente',
+      data: await addLocal
+    };
+
+    return response;
+  }
+
+  @Put('/updatelocal')
+  async updateLocal(
+    @Body() body: { 
+      localId: number; 
+      name?: string; 
+      address?: string;  
+      user_id?: number; 
+    }
+  ) {
+    // Extraemos el userId y agrupamos el resto de datos para la actualización
+    const { localId, ...dataToUpdate } = body;
+
+    const localActualizado = await this.localsService.updateLocal(localId, dataToUpdate);
+
+    if (!localActualizado) {
+      return {
+        statusCode: 404,
+        message: 'No se pudo actualizar. Local no encontrado.',
+        data: null
+      };
+    }
+
+    return {
+      statusCode: 200,
+      message: 'Local actualizado exitosamente',
+      data: localActualizado
+    };
+  }
+
 }
