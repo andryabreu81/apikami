@@ -29,18 +29,18 @@ export class UserEntity {
   @Column({ type: 'varchar', nullable: true, select: false }) 
   password?: string;
 
-  @Column({ name: 'rol_id', type: 'int' }) 
+  @Column({ name: 'rol_id', type: 'int', insert: false, update: false }) 
   role_id: number;
 
   @Column({ type: 'int', default: 1, nullable: true })
   active: number;
 
+  // CORRECCIÓN: El tipo debe ser RoleEntity, no number
   @ManyToOne(() => RoleEntity, (role) => role.users)
-  @JoinColumn({ name: 'rol_id' }) // Debe coincidir con el nombre en tb_users
-  role: number;
+  @JoinColumn({ name: 'rol_id' }) 
+  role: RoleEntity;
 
-  @OneToMany(() => LocalEntity, (local) => local.user)
-  locals: LocalEntity[];
+
 
   @CreateDateColumn({ name: 'create_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   create_at: Date;

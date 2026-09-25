@@ -4,7 +4,8 @@ import {
   PrimaryGeneratedColumn, 
   CreateDateColumn, 
   UpdateDateColumn, 
-  ManyToOne, 
+  ManyToOne,
+  OneToMany, 
   JoinColumn,
   Index
 } from 'typeorm';
@@ -24,16 +25,19 @@ export class LocalEntity {
   address: string;
 
   // Guardamos la columna física para escenarios donde solo quieras usar el ID directamente
-  @Column({ type: 'bigint', nullable: true })
+  @Column({ type: 'bigint', nullable: true, insert: false, update: false })
   user_id: number;
 
   @Column({ type: 'int', default: 1, nullable: true })
   active: number;
 
   // RELACIÓN: Muchos locales pertenecen a un usuario
-  @ManyToOne(() => UserEntity, (user) => user.locals, { nullable: true })
+  //@ManyToOne(() => UserEntity, (user) => user.locals, { nullable: true })
   @JoinColumn({ name: 'user_id' }) // Conecta con la FK física del DDL
   user: UserEntity;
+
+  @OneToMany(() => LocalEntity, (local) => local.user)
+  locals: LocalEntity[];
 
   @CreateDateColumn({ name: 'create_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   create_at: Date;

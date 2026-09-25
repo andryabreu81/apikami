@@ -29,6 +29,6 @@ export class RoleEntity {
   modified_at: Date;
 
   // Relación con la tabla de usuarios
-  @OneToMany(() => UserEntity, (user) => user.role_id)
+  @OneToMany(() => UserEntity, (user) => user.role)
   users: UserEntity[];
 }
