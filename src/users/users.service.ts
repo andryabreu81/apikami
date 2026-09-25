@@ -38,7 +38,13 @@ export class UsersService {
     role_id: number, 
     password:string): Promise<UserEntity> {
 
-    const newUser = this.usersRepository.create({ name, email, lastname, role_id,  password });
+    const newUser = this.usersRepository.create({ 
+      name, 
+      email, 
+      lastname, 
+      role: { id: role_id } as any, 
+      password 
+    });
 
     return await this.usersRepository.save(newUser);
   }
@@ -49,10 +55,19 @@ export class UsersService {
     updateData: { name?: string; lastname?: string; email?: string; role_id?: number; password?: string }
   ): Promise<UserEntity | null> {
     
-    // 1. Ejecutamos la actualización directamente en la BD
-    await this.usersRepository.update(userId, updateData);
+    const user = await this.findUser(userId);
+    if (!user) {
+      return null;
+    }
 
-    // 2. Retornamos el usuario ya actualizado (reutilizando tu método findUser)
+    if (updateData.name) user.name = updateData.name;
+    if (updateData.lastname) user.lastname = updateData.lastname;
+    if (updateData.email) user.email = updateData.email;
+    if (updateData.password) user.password = updateData.password;
+    if (updateData.role_id) user.role = { id: updateData.role_id } as any;
+
+    await this.usersRepository.save(user);
+
     return this.findUser(userId);
   }
 

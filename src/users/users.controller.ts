@@ -55,12 +55,12 @@ export class UsersController {
     role_id: number ;  
     password:string }): Promise<any> {
 
-    let addUser = this.usersService.addUsers(userData.name, userData.email, userData.lastname, userData.role_id, userData.password);
+    let addUser = await this.usersService.addUsers(userData.name, userData.email, userData.lastname, userData.role_id, userData.password);
 
     let response = {
       statusCode: 200,
       message: 'Usuario agregado exitosamente',
-      data: await addUser
+      data: addUser
     };
 
     return response;
