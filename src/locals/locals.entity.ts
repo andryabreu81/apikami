@@ -32,12 +32,9 @@ export class LocalEntity {
   active: number;
 
   // RELACIÓN: Muchos locales pertenecen a un usuario
-  //@ManyToOne(() => UserEntity, (user) => user.locals, { nullable: true })
+  @ManyToOne(() => UserEntity, (user) => user.locals, { nullable: true })
   @JoinColumn({ name: 'user_id' }) // Conecta con la FK física del DDL
   user: UserEntity;
-
-  @OneToMany(() => LocalEntity, (local) => local.user)
-  locals: LocalEntity[];
 
   @CreateDateColumn({ name: 'create_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   create_at: Date;

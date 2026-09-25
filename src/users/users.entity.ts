@@ -40,8 +40,8 @@ export class UserEntity {
   @JoinColumn({ name: 'rol_id' }) 
   role: RoleEntity;
 
-
-
+  @OneToMany(() => LocalEntity, (local) => local.user)
+  locals: LocalEntity[];
   @CreateDateColumn({ name: 'create_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   create_at: Date;
 
