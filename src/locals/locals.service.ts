@@ -34,7 +34,8 @@ export class LocalsService {
     localData: {
       name: string, 
       address: string, 
-      user_id: number
+      user_id: number,
+      active?: number
     }): Promise<LocalEntity> {
 
     const newLocal = this.localsRepository.create(localData);
@@ -45,7 +46,7 @@ export class LocalsService {
   // actualizar un usuario especifico
   async updateLocal(
     localId: number,
-    updateData: { name?: string; address?: string;  user_id?: number; }
+    updateData: { name?: string; address?: string;  user_id?: number; active?: number; }
   ): Promise<LocalEntity | null> {
     
     // 1. Ejecutamos la actualización directamente en la BD

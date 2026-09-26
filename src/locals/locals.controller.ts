@@ -52,6 +52,7 @@ export class LocalsController {
     name: string; 
     address: string; 
     user_id: number ;
+    active?: number;
     }): Promise<any> {
 
     let addLocal = this.localsService.addLocal(localData);
@@ -72,6 +73,7 @@ export class LocalsController {
       name?: string; 
       address?: string;  
       user_id?: number; 
+      active?: number;
     }
   ) {
     // Extraemos el userId y agrupamos el resto de datos para la actualización
