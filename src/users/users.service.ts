@@ -11,39 +11,39 @@ export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly usersRepository: Repository<UserEntity>,
-  ) {}
+  ) { }
 
   async getUsers(): Promise<UserEntity[]> {
-    console.log('here service');
+    //console.log('here service');
     return await this.usersRepository.find({
-      relations:['role']
+      relations: ['role']
     });
   }
 
   // Obtener un usuario por su ID
   async findUser(userId: number): Promise<UserEntity | null> {
 
-    return await this.usersRepository.findOne({ 
+    return await this.usersRepository.findOne({
       where: { id: userId },
-      relations:['role'] 
+      relations: ['role']
     });
 
   }
 
   // agregar un usuario
   async addUsers(
-    name: string, 
-    email: string, 
-    lastname: string, 
-    role_id: number, 
-    password:string): Promise<UserEntity> {
+    name: string,
+    email: string,
+    lastname: string,
+    role_id: number,
+    password: string): Promise<UserEntity> {
 
-    const newUser = this.usersRepository.create({ 
-      name, 
-      email, 
-      lastname, 
-      role: { id: role_id } as any, 
-      password 
+    const newUser = this.usersRepository.create({
+      name,
+      email,
+      lastname,
+      role: { id: role_id } as any,
+      password
     });
 
     return await this.usersRepository.save(newUser);
@@ -54,7 +54,7 @@ export class UsersService {
     userId: number,
     updateData: { name?: string; lastname?: string; email?: string; role_id?: number; password?: string; active?: number }
   ): Promise<UserEntity | null> {
-    
+
     const user = await this.findUser(userId);
     if (!user) {
       return null;
