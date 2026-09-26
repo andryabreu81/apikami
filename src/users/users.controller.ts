@@ -76,6 +76,7 @@ export class UsersController {
       email?: string; 
       role_id?: number; 
       password?: string; 
+      active?: number;
     }
   ) {
     // Extraemos el userId y agrupamos el resto de datos para la actualización

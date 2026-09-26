@@ -1,8 +1,8 @@
-import { 
-  Entity, 
-  Column, 
-  PrimaryGeneratedColumn, 
-  CreateDateColumn, 
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
@@ -26,10 +26,10 @@ export class UserEntity {
   @Column({ type: 'varchar', unique: true })
   email: string;
 
-  @Column({ type: 'varchar', nullable: true, select: false }) 
+  @Column({ type: 'varchar', nullable: true, select: false })
   password?: string;
 
-  @Column({ name: 'rol_id', type: 'int', insert: false, update: false }) 
+  @Column({ name: 'rol_id', type: 'int', insert: true, update: true })
   role_id: number;
 
   @Column({ type: 'int', default: 1, nullable: true })
@@ -37,7 +37,7 @@ export class UserEntity {
 
   // CORRECCIÓN: El tipo debe ser RoleEntity, no number
   @ManyToOne(() => RoleEntity, (role) => role.users)
-  @JoinColumn({ name: 'rol_id' }) 
+  @JoinColumn({ name: 'rol_id' })
   role: RoleEntity;
 
   @OneToMany(() => LocalEntity, (local) => local.user)

@@ -52,7 +52,7 @@ export class UsersService {
   // actualizar un usuario especifico
   async updateUser(
     userId: number,
-    updateData: { name?: string; lastname?: string; email?: string; role_id?: number; password?: string }
+    updateData: { name?: string; lastname?: string; email?: string; role_id?: number; password?: string; active?: number }
   ): Promise<UserEntity | null> {
     
     const user = await this.findUser(userId);
@@ -65,6 +65,7 @@ export class UsersService {
     if (updateData.email) user.email = updateData.email;
     if (updateData.password) user.password = updateData.password;
     if (updateData.role_id) user.role = { id: updateData.role_id } as any;
+    if (updateData.active !== undefined) user.active = updateData.active;
 
     await this.usersRepository.save(user);
 
